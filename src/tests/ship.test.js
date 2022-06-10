@@ -89,5 +89,12 @@ test('.isSunk() returns true when no coordinates are left', () => {
 
     expect(ship1.isSunk()).toBe(true);
 
+})
+
+test('.orientation returns correct orientation', () => {
+
+    const ship1 = ship([3,1], [1,1]);
+
+    expect(ship1.orientation).toBe(0)
 
 })

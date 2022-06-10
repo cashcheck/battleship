@@ -65,6 +65,19 @@ function ship(c1, c2) {
 
     let hitPoints = getHitPoints(c1,c2);
 
+    //returns the orientation of the ship. Returns 0 for horizontal, 1 for vertical.
+    function orientation() {
+        if (length == 1) {
+            return 1;
+        }
+        if (c1[0] == c2[0]) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+
     //checks to see if coordinates hit, returns [true/false, coordinate]
     function hit(c) {
         const cString = c.toString()
@@ -88,6 +101,7 @@ function ship(c1, c2) {
         length: length,
         hitPoints: hitPoints,
         hits: hits,
+        orientation,
         isSunk,
         hit,
     };
