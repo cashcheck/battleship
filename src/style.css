@@ -1,12 +1,25 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#title {
+    margin: 30px 50px;
+}
+
+#title > h1 {
+    font-size: 3.2rem;
+    margin: 0;
+}
+
+#title > p {
+    margin: 0 3px 0;
+}
 
 .cell-content {
     width: 28px;
     height: 28px;
-    background-color: lightgray;
-}
-
-.cell-content.active {
-    background-color: darkgray;
+    z-index: 1;
+    background-color: #E5F3FF;
 }
 
 .cell-content:hover {
@@ -14,24 +27,42 @@
 }
 
 .drag {
-    border: 2px solid black;
-    width: 28px;
-    height: 60px;
-    position: absolute !important;
+    border: 2px solid #1490FD;
+    position: absolute;
     z-index: 2;
     margin: -2px;
-    background-color: lightsteelblue;
+    background-color: #C8E4FD;
 }
 
 .drag:hover {
-    cursor: grab;
+    cursor: move;
 }
 
 table {
-    margin: 50px auto 0 auto;
+    margin: 50px auto 30px auto;
     border-collapse: collapse;
 }
 
+.active, .adjacent {
+    background-color: white;
+}
+
 td {
-    border: 1px solid;
+    border: 1px solid #C8E4FD;
+}
+
+#selection {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    width: 320px;
+    height: 40px;
+    margin: auto;
+}
+
+button {
+    border: none;
+    border-radius: 0;
+    padding: 10px;
+
 }

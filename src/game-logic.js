@@ -63,10 +63,10 @@ function ship(c1, c2) {
 
     }
 
-    let hitPoints = getHitPoints(c1,c2);
+    const hitPoints = getHitPoints(c1,c2);
 
     //returns the orientation of the ship. Returns 0 for horizontal, 1 for vertical.
-    function orientation() {
+    function getOrientation() {
         if (length == 1) {
             return 1;
         }
@@ -77,6 +77,70 @@ function ship(c1, c2) {
             return 0;
         }
     }
+
+    const orientation = getOrientation();
+
+    //function returns the coordinates which are adjacent to ship
+    function getAdjacent() {
+        
+        hitPoints.sort()
+        const start = hitPoints[0];
+        const end = hitPoints[length - 1];
+        let adjacencies = []
+        const ori = getOrientation();
+        
+        //if horizontal ship
+        if (ori == 0) {
+            
+            //add coordinates to the left of start
+            adjacencies.push([start[0]-1,start[1]]);
+            adjacencies.push([start[0]-1,start[1]-1]);
+            adjacencies.push([start[0]-1,start[1]+1]);
+
+            //add coordinates to right of end
+            adjacencies.push([end[0]+1, end[1]])
+            adjacencies.push([end[0]+1, end[1]-1])
+            adjacencies.push([end[0]+1, end[1]+1])
+
+            //add coordinates above and below each coordinate in hitPoints
+            hitPoints.forEach(coordinate => {
+
+                adjacencies.push([coordinate[0], coordinate[1]+1]);
+                adjacencies.push([coordinate[0], coordinate[1]-1]);
+
+            })
+
+            return adjacencies;
+
+        }
+
+        //if vertical ship
+        else {
+
+            //add coordinates above start
+            adjacencies.push([start[0], start[1]-1]);
+            adjacencies.push([start[0]-1, start[1]-1]);
+            adjacencies.push([start[0]+1, start[1]-1]);
+
+            //add coordinates below end
+            adjacencies.push([end[0], end[1]+1]);
+            adjacencies.push([end[0]-1, end[1]+1]);
+            adjacencies.push([end[0]+1, end[1]+1]);
+
+            hitPoints.forEach(coordinate => {
+
+                adjacencies.push([coordinate[0]+1, coordinate[1]]);
+                adjacencies.push([coordinate[0]-1, coordinate[1]]);
+
+            })
+
+            return adjacencies;
+
+        }
+
+    }
+
+    const adjacent = getAdjacent();
 
     //checks to see if coordinates hit, returns [true/false, coordinate]
     function hit(c) {
@@ -101,11 +165,27 @@ function ship(c1, c2) {
         length: length,
         hitPoints: hitPoints,
         hits: hits,
-        orientation,
+        adjacent: adjacent,
+        orientation: orientation,
         isSunk,
         hit,
     };
 
+}
+
+//ship object initialized with one coordinate, orientation and length
+function ship2(c1, length, orientation) {
+    let c2 = []
+    if (orientation == 0) {
+        c2.push(c1[0]+length-1);
+        c2.push(c1[1]);
+        return ship(c1,c2);
+    }
+    else {
+        c2.push(c1[0]);
+        c2.push(c1[1]+length-1)
+        return ship(c1,c2);
+    }
 }
 
 //gameboard factory function
@@ -117,6 +197,7 @@ function gameBoard() {
 
     let ships = [];
     let shipsC = []
+    let adjacent = [];
     let misses = [];
     let hits = [];
 
@@ -147,6 +228,10 @@ function gameBoard() {
                 return false;
             }
 
+            if (adjacent.some( c => c.toString() == ship.hitPoints[i].toString())) {
+                return false;
+            }
+
         }
 
         return true;
@@ -160,14 +245,63 @@ function gameBoard() {
             shipsC.push(coordinate);
         })
         
+        ship.adjacent.forEach( c => {
+            adjacent.push(c);
+        });
         ships.push(ship);
     }
 
-    //checks to see if ship is valid before placing
+    //checks to see if ship is valid before placing. Returns true if valid, false if not.
     function placeValidShip(ship) {
         if (checkShip(ship)) {
             placeShip(ship);
+            return true;
         }
+        else {
+            return false;
+        }
+    }
+
+    //given a coordinate find the corresponding ship
+    function findShip(c) {
+        
+        return ships.find(s => s.hitPoints.find(x => x.toString() == c.toString()))
+
+    }
+
+    function findShipIndex(c) {
+
+        return ships.findIndex(s => s.hitPoints.find(x => x.toString() == c.toString()))
+
+    }
+
+    function removeShip(c) {
+
+        const i = findShipIndex(c);
+        const rShip = findShip(c);
+        ships.splice(i,1);
+        removeAdjacent(rShip);
+        removeShipC(rShip);
+        return rShip;
+
+    }
+
+    function removeAdjacent(ship) {
+        ship.adjacent.forEach(c => {
+
+            let i = adjacent.findIndex(coordinate => coordinate.toString() == c.toString())
+            adjacent.splice(i,1);
+
+        })
+    }
+
+    function removeShipC(ship) {
+        ship.hitPoints.forEach(c => {
+
+            let i = shipsC.findIndex(coordinate => coordinate.toString() == c.toString())
+            shipsC.splice(i,1);
+
+        })
     }
 
     function nRandomShips(n, shipLength) {
@@ -209,11 +343,13 @@ function gameBoard() {
             shipsC: shipsC,
             hits: hits,
             misses: misses,
-            placeShip,
-            checkShip,
+            adjacent: adjacent,
             placeValidShip,
-            randomShip,
+            findShip,
+            findShipIndex,
+            removeShip,
             nRandomShips,
+            randomShip,
             sunkAll,
             receiveAttack,
     };
@@ -251,5 +387,5 @@ function game(p1Board, p2Board) {
 
 
 
-export {ship, gameBoard, AI};
+export {ship, ship2, gameBoard, AI};
 
