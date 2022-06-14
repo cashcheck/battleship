@@ -116,3 +116,11 @@ test('.ship2 creates correct ship with inputs: 1 coordinate, orientation and len
     expect(ship1.hitPoints.sort()).toStrictEqual([[0,1],[1,1],[2,1]]);
 
 })
+
+test('.rotate() returns the rotated ship', () => {
+
+    const shipa = ship([1,2], [1,5]);
+    const shipb = shipa.rotate();
+    expect(shipb.hitPoints.sort()).toStrictEqual([[1,2],[2,2],[3,2],[4,2]]);
+
+})

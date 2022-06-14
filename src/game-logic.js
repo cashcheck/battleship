@@ -142,6 +142,15 @@ function ship(c1, c2) {
 
     const adjacent = getAdjacent();
 
+    function rotate() {
+        if (orientation == 0) {
+            return ship2(c1, length, 1);
+        }
+        else {
+            return ship2(c1, length, 0);
+        }
+    }
+
     //checks to see if coordinates hit, returns [true/false, coordinate]
     function hit(c) {
         const cString = c.toString()
@@ -167,6 +176,7 @@ function ship(c1, c2) {
         hits: hits,
         adjacent: adjacent,
         orientation: orientation,
+        rotate,
         isSunk,
         hit,
     };
@@ -219,7 +229,7 @@ function gameBoard() {
         return ship(c1,c2);
     }
 
-    //checks if ship coordinates already in the Board. 
+    //checks if ship coordinates already in the Board or if coordinates out of bounds.
     function checkShip(ship) {
 
         for (let i = 0; i < ship.length; i++) {
@@ -229,6 +239,16 @@ function gameBoard() {
             }
 
             if (adjacent.some( c => c.toString() == ship.hitPoints[i].toString())) {
+                return false;
+            }
+
+        }
+
+        for (let i = 0; i < ship.length; i++) {
+            
+            let coordinate = ship.hitPoints[i];
+            
+            if (coordinate.some(c => c < 0 || c > 9)) {
                 return false;
             }
 
@@ -282,6 +302,7 @@ function gameBoard() {
         ships.splice(i,1);
         removeAdjacent(rShip);
         removeShipC(rShip);
+
         return rShip;
 
     }

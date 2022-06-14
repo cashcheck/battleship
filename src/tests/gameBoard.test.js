@@ -51,6 +51,22 @@ test('.sunkAll() returns True correctly', () => {
 
 })
 
+test('placeValidShip() only places valid ships', () => {
+
+    const gameBoard1 = gameBoard();
+
+    const shipa = ship([4,1], [4,3]);
+    const shipb = ship([8,7], [8,9]);
+    const shipc = ship([8,6], [8,4]);
+    const shipd = ship([0,1], [-2,1]);
+
+    expect(gameBoard1.placeValidShip(shipa)).toBe(true);
+    expect(gameBoard1.placeValidShip(shipb)).toBe(true);
+    expect(gameBoard1.placeValidShip(shipc)).toBe(false);
+    expect(gameBoard1.placeValidShip(shipd)).toBe(false);
+
+})
+
 test('.randomShip creates randomShip with correct length', () => {
     
     const gameBoard1 = gameBoard()

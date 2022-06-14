@@ -7,6 +7,7 @@ function initInput(gb) {
     addAdjacent(gb);
     addShips(gb);
     drag(gb);
+    rotate(gb);
 }
 
 function addCoordinates(gb) {
@@ -79,8 +80,8 @@ let rShip = null;
 document.addEventListener('dragstart', (e) => {
     
     dragged = e.target;
-    let x = dragged.parentNode.getAttribute('x');
-    let y = dragged.parentNode.getAttribute('y');
+    let x = parseInt(dragged.parentNode.getAttribute('x'));
+    let y = parseInt(dragged.parentNode.getAttribute('y'));
     rShip = gb.removeShip([x,y]);
     removeShipDOM(rShip);
     addAdjacent(gb);
@@ -181,6 +182,54 @@ function addShipDOM(s) {
         const cell = document.querySelector(`[x='${x}'][y='${y}']`);
             
         cell.classList.add('active');
+
+    })
+
+}
+
+function rotate(gb) {
+    
+    const ships = document.querySelectorAll('.drag');
+    ships.forEach(s => {
+
+        s.addEventListener('click', e => {
+
+        //getting parameters for ship
+        
+        console.log('click')
+        const dragDiv = e.target;
+        const x = parseInt(dragDiv.parentNode.getAttribute('x'));
+        const y = parseInt(dragDiv.parentNode.getAttribute('y'));
+        const l = parseInt(dragDiv.getAttribute('length'));
+        const o = parseInt(dragDiv.getAttribute('orientation'));
+
+        let currentShip = ship2([x,y], l, o);
+        console.log(currentShip);
+        let newShip = currentShip.rotate();
+        gb.removeShip([x,y]);
+
+        //if new ship is a valid placement
+        if (gb.placeValidShip(newShip)) {
+            removeShipDOM(currentShip);
+            addShipDOM(newShip);
+            dragDiv.setAttribute('orientation', `${newShip.orientation}`)
+
+            if (newShip.orientation == 0) {
+                dragDiv.style.width = `${30*newShip.length}px`;
+                dragDiv.style.height = `28px`;
+            }
+            else {
+                dragDiv.style.height = `${30*newShip.length}px`;
+                dragDiv.style.width = `28px`;
+            }
+
+        }
+
+        else {
+            gb.placeValidShip(currentShip);
+        }
+
+        })
 
     })
 
