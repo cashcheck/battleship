@@ -1,9 +1,5 @@
-import {ship, gameBoard, AI} from '../game-logic.js';
+import { ship, gameBoard, AI } from '../game-logic.js';
 
-test('.play returns random coordinates within range', () => {
-    const ai = AI();
-    const coordinates = ai.play();
+test('.attack() attacks valid coordinates', () => {
 
-    expect(coordinates[0]).toBeLessThanOrEqual(9)
-    expect(coordinates[1]).toBeLessThanOrEqual(9)
-})
+});

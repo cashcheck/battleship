@@ -15,6 +15,12 @@ body {
     margin: 0 3px 0;
 }
 
+#game-container {
+    display: flex;
+    gap: 150px;
+    justify-content: center;
+}
+
 .cell-content {
     width: 28px;
     height: 28px;
@@ -22,8 +28,14 @@ body {
     background-color: #E5F3FF;
 }
 
-.cell-content:hover {
-    background-color: white;
+.cell-content.attacked {
+    background-color: #E5F3FF !important;
+}
+
+.cell-content.active{
+    -webkit-box-shadow:inset 0px 0px 0px 2px #1490FD;
+    -moz-box-shadow:inset 0px 0px 0px 2px #1490FD;
+    box-shadow:inset 0px 0px 0px 2px #1490FD;
 }
 
 .drag {
@@ -41,6 +53,7 @@ body {
 table {
     margin: 50px auto 30px auto;
     border-collapse: collapse;
+    background-color: white;
 }
 
 .active, .adjacent {
@@ -65,4 +78,52 @@ button {
     border-radius: 0;
     padding: 10px;
 
+}
+
+#ai-container {
+    display: none;
+}
+
+#blocker {
+    z-index: -1;
+    background-color: lightgrey;
+    opacity: 50%;
+    width: 310px;
+    height: 310px;
+    position: absolute;
+    margin-top: 50px;
+}
+
+.ai-cell {
+    width: 28px;
+    height: 28px;
+}
+
+.ai-cell:hover{
+    cursor: crosshair;
+    -webkit-box-shadow:inset 0px 0px 0px 2px #1490FD;
+    -moz-box-shadow:inset 0px 0px 0px 2px #1490FD;
+    box-shadow:inset 0px 0px 0px 2px #1490FD;
+}
+
+.attacked:hover {
+    cursor: default !important;
+    background-color: #E5F3FF !important;
+}
+
+.attacked.contains-ship:hover {
+    cursor: default !important;
+    background-color: #1490FD !important;
+}
+
+.ai-cell.attacked {
+    background-color: #E5F3FF;
+}
+
+.ai-cell.contains-ship {
+    background-color: white;
+}
+
+.ai-cell.attacked.contains-ship {
+    background-color:  #1490FD;
 }
