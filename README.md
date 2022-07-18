@@ -4,10 +4,6 @@
 
 > - [Live Demo](https://cashcheck.github.io/battleship/)
 
----
-permalink: /index.html
----
-
 ## Rules
 Same as original battleship with a few additional rules:
 1. Ships may not be placed in squares adjacent to ship squares.
