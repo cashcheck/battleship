@@ -1,6 +1,6 @@
 # Battleship
 
-
+> - [Live Demo](https://cashcheck.github.io/battleship/)
 
 > ## From [The Odin Project](https://www.theodinproject.com/courses/javascript/lessons/battleship)
 
