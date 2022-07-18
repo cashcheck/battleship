@@ -1,8 +1,8 @@
 # Battleship
 
-> - [Live Demo](https://cashcheck.github.io/battleship/)
-
 > ## From [The Odin Project](https://www.theodinproject.com/courses/javascript/lessons/battleship)
+
+> - [Live Demo](https://cashcheck.github.io/battleship/)
 
 ## Rules
 Same as original battleship with a few additional rules:
