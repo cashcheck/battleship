@@ -2,7 +2,7 @@
 
 
 
-## From [The Odin Project](https://www.theodinproject.com/courses/javascript/lessons/battleship)
+> ## From [The Odin Project](https://www.theodinproject.com/courses/javascript/lessons/battleship)
 
 ##Rules
 Same as original battleship with a few additional rules:
