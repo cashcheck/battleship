@@ -32,6 +32,10 @@ body {
     background-color: #E5F3FF !important;
 }
 
+.cell-content.attacked.active {
+    background-color: #1490FD !important;
+}
+
 .cell-content.active{
     -webkit-box-shadow:inset 0px 0px 0px 2px #1490FD;
     -moz-box-shadow:inset 0px 0px 0px 2px #1490FD;
